@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS3 Retro Hub</title>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+
+    body {
+      font-family: monospace;
+      background: radial-gradient(circle at center, #0a0011 60%, #000 100%);
+      color: white;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* Texto HEN no centro */
+    .hen {
+      position: fixed;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #8b5cf6;
+      font-size: 60px;
+      font-weight: bold;
+      text-shadow: 0 0 20px #a855f7, 0 0 40px #7c3aed;
+      letter-spacing: 5px;
+      z-index: 10;
+    }
+
+    /* Partículas roxas subindo */
+    .particle {
+      position: fixed;
+      bottom: 0;
+      width: 6px;
+      height: 6px;
+      background: #a855f7;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: rise 6s linear infinite;
+    }
+
+    @keyframes rise {
+      from {transform: translateY(0) scale(1); opacity: 0.8;}
+      to {transform: translateY(-110vh) scale(0); opacity: 0;}
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 15px;
+      backdrop-filter: blur(6px);
+      flex-wrap: wrap;
+      z-index: 100;
+      position: relative;
+    }
+
+    .menu {
+      position: relative;
+      margin: 10px;
+    }
+
+    .menu button {
+      background: #222;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .menu button:hover {
+      background: #444;
+    }
+
+    .submenu {
+      display: none;
+      position: absolute;
+      top: 45px;
+      left: 0;
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 8px;
+      flex-direction: column;
+      animation: fadeIn 0.3s;
+      z-index: 10;
+    }
+
+    .submenu a {
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      display: block;
+      transition: background 0.3s;
+    }
+
+    .submenu a:hover {
+      background: #333;
+    }
+
+    .show { display: flex; }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #ccc;
+      font-size: 14px;
+      background: rgba(0, 0, 0, 0.6);
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      z-index: 100;
+    }
+
+    .jumpstyle {
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #8b5cf6;
+      font-size: 22px;
+      text-shadow: 0 0 15px #a855f7;
+      opacity: 0.9;
+      letter-spacing: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="jumpstyle">JUMPSTYLE-HOST</div>
+
+  <div class="hen">HEN</div>
+
+  <!-- Partículas -->
+  <script>
+    // Cria partículas roxas subindo da base da tela (toda largura)
+    for (let i = 0; i < 50; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * window.innerWidth + 'px';
+      p.style.animationDelay = Math.random() * 6 + 's';
+      p.style.width = p.style.height = Math.random() * 6 + 4 + 'px';
+      document.body.appendChild(p);
+    }
+  </script>
+
+  <!-- Música de fundo -->
+  <audio id="bgm" autoplay loop>
+    <source src="bgm.ogg" type="audio/ogg">
+  </audio>
+
+  <header>
+    <div class="menu">
+      <a href="https://ps3xploit.me/hen/installer/auto/index.html">
+        <button>HEN Auto Installer</button>
+      </a>
+    </div>
+
+    <div class="menu">
+      <button onclick="toggleMenu('apps')">Apps Úteis</button>
+      <div id="apps" class="submenu">
+        <a href="https://www.mediafire.com/file/b3ty5oq52vmg9jr/webMAN+MOD.pkg/file">webMAN</a>
+        <a href="https://www.mediafire.com/file/f641eqcw3trijyr/PKGI.pkg/file">PKGI</a>
+        <a href="https://www.mediafire.com/file/qnz9x19jaulituc/Gamepad+Test+PS3.pkg/file">Gamepad Test</a>
+        <a href="https://www.mediafire.com/file/n6dkacbest54tbp/IrisMAN+HEN.pkg/file">IrisMAN</a>
+        <a href="https://www.mediafire.com/file/09l74ncv4kbryu4/prepISO.pkg/file">prepISO</a>
+        <a href="https://www.mediafire.com/file/sw9r0xibzrm82ks/PSP+Remaster.pkg/file">PSP Remaster</a>
+        <a href="https://www.mediafire.com/file/1smz6ly5inu0fhp/movian.pkg/file">Movian</a>
+      </div>
+    </div>
+
+    <div class="menu">
+      <button onclick="toggleMenu('fix')">FIX y RAPS</button>
+      <div id="fix" class="submenu">
+        <a href="https://www.mediafire.com/file/zyjg2waw5d4i2xl/RAP+PS2.pkg/file">RAP PS2</a>
+        <a href="https://www.mediafire.com/file/v0aadlcfle08vs3/HFW+Tools+Auto+HEN+4.91.pkg/file">HFW Tools Auto HEN 4.91</a>
+        <a href="https://www.mediafire.com/file/y64u0i2w1g7kmgb/FIX+STORES+HEN+AUTO.pkg/file">FIX Stores + HEN Auto</a>
+        <a href="https://www.mediafire.com/file/51taix8odufxd89/MULTI+FIX+CFW+(29+STORES).pkg/file">Multi FIX CFW (29 Stores)</a>
+        <a href="https://www.mediafire.com/file/r66y9nf62czomiv/Extended+Download.pkg/file">Extended Download Plugin</a>
+        <a href="https://www.mediafire.com/file/0hodvrx36xw9akn/14.500+raps+-+HEN.pkg/file">14.500 RAPS</a>
+        <a href="https://www.mediafire.com/file/1o0bxww73xdlv08/Activador+Offline+PSN.pkg/file">Activador Offline PSN</a>
+      </div>
+    </div>
+
+    <div class="menu">
+      <a href="https://jumpstyle-juliox.github.io/Retro-store/">
+        <button>Retro Store</button>
+      </a>
+    </div>
+  </header>
+
+  <footer>
+    made by <b>jumpstyle_julioX</b>
+  </footer>
+
+  <script>
+    function toggleMenu(id) {
+      const menu = document.getElementById(id);
+      menu.classList.toggle('show');
+    }
+
+    // Garante que o áudio toque mesmo com bloqueio
+    setTimeout(() => {
+      const audio = document.getElementById('bgm');
+      if (audio.paused) audio.play().catch(()=>{});
+    }, 1000);
+  </script>
+
+</body>
+    </html>
+    
